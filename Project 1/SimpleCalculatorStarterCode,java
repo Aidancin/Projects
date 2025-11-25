@@ -1,0 +1,143 @@
+/* 
+ NAME: Trisha Smith  
+ DATE: 9/14/2025  
+
+ PROJECT BRIEF: 
+ Goal:
+ Learn methods, switch statements, and error handling.
+
+ This version includes:
+ ✔ Addition, Subtraction, Multiplication, Division
+ ✔ Division-by-zero validation
+ ✔ Loop until user quits
+ ✔ try/catch to handle invalid input
+ ✔ Power (x^y)
+ ✔ Square root (√x)
+*/
+
+import java.util.*;
+
+public class SimpleCalculatorStarterCode {
+    
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter name: ");
+        String name = input.nextLine();
+        System.out.println("Hello " + name + " :D");
+
+        boolean running = true;
+
+        while (running) {
+
+            System.out.println("\n---------------------------");
+            System.out.println("      SIMPLE CALCULATOR");
+            System.out.println("---------------------------");
+            System.out.println("Choose an operation:");
+            System.out.println(" +   Addition");
+            System.out.println(" -   Subtraction");
+            System.out.println(" *   Multiplication");
+            System.out.println(" /   Division");
+            System.out.println(" ^   Power (x^y)");
+            System.out.println(" r   Square Root (√x)");
+            System.out.println(" q   Quit Program");
+            System.out.print("Enter operator: ");
+            String operator = input.next();
+
+            try {
+
+                switch (operator) {
+
+                    case "+": {
+                        double a = getNumber(input, "Enter first number: ");
+                        double b = getNumber(input, "Enter second number: ");
+                        System.out.println("Result: " + add(a, b));
+                        break;
+                    }
+
+                    case "-": {
+                        double a = getNumber(input, "Enter first number: ");
+                        double b = getNumber(input, "Enter second number: ");
+                        System.out.println("Result: " + subtract(a, b));
+                        break;
+                    }
+
+                    case "*": {
+                        double a = getNumber(input, "Enter first number: ");
+                        double b = getNumber(input, "Enter second number: ");
+                        System.out.println("Result: " + multiply(a, b));
+                        break;
+                    }
+
+                    case "/": {
+                        double a = getNumber(input, "Enter first number: ");
+                        double b = getNumber(input, "Enter second number: ");
+                        
+                        if (b == 0) {
+                            System.out.println("Error: Cannot divide by zero!");
+                        } else {
+                            System.out.println("Result: " + divide(a, b));
+                        }
+                        break;
+                    }
+
+                    case "^": { 
+                        double a = getNumber(input, "Base number (x): ");
+                        double b = getNumber(input, "Exponent (y): ");
+                        System.out.println("Result: " + Math.pow(a, b));
+                        break;
+                    }
+
+                    case "r": {
+                        double a = getNumber(input, "Enter number for square root (√x): ");
+                        if (a < 0) {
+                            System.out.println("Error: Cannot take square root of a negative number!");
+                        } else {
+                            System.out.println("Result: " + Math.sqrt(a));
+                        }
+                        break;
+                    }
+
+                    case "q":
+                        running = false;
+                        System.out.println("Goodbye, " + name + "! 👋");
+                        break;
+
+                    default:
+                        System.out.println("Invalid operator. Try again!");
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter numbers only.");
+                input.nextLine(); // clear bad input
+            }
+        }
+
+        input.close();
+    }
+
+    // ---------- METHODS FOR OPERATIONS ----------
+    public static double add(double a, double b) {
+        return a + b;
+    }
+    public static double subtract(double a, double b) {
+        return a - b;
+    }
+    public static double multiply(double a, double b) {
+        return a * b;
+    }
+    public static double divide(double a, double b) {
+        return a / b;
+    }
+
+    // ---------- HELPER METHOD TO GET NUMBER SAFELY ----------
+    public static double getNumber(Scanner input, String message) {
+        System.out.print(message);
+        while (!input.hasNextDouble()) {
+            System.out.println("Invalid number. Try again.");
+            input.next();
+            System.out.print(message);
+        }
+        return input.nextDouble();
+    }
+}
